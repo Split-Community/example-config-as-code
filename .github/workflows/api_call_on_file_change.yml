@@ -1,0 +1,30 @@
+name: API Call on File Change
+
+on:
+  push:
+    branches:
+      - main  # Change this to your branch name
+
+jobs:
+  api_call_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Out Code
+        uses: actions/checkout@v2
+
+      - name: Read File Content
+        id: read_file
+        run: |
+          file_content=$(cat flag_config.json)
+          echo "::set-output name=content::$file_content"
+
+      - name: Make API Call
+        id: api_call
+        run: |
+          content="${{ steps.read_file.outputs.content }}"
+          # Modify the following line to use your API endpoint and method
+          response=$(curl -X POST -H "Content-Type: application/json" -d "$content" https://your.api.endpoint)
+          echo "::set-output name=response::$response"
+        env:
+          API_KEY: ${{ secrets.API_KEY }}  # If using any secrets
