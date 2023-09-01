@@ -11,13 +11,13 @@ jobs:
 
     steps:
       - name: Check Out Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get Changed Files
         id: changed_files
         run: |
           # Get a list of changed files in the push event
-          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.vent.after }})
           echo "::set-output name=files::$changed_files"
 
 
