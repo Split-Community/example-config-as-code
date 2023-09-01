@@ -31,7 +31,7 @@ jobs:
           changed_files="${{ steps.changed_files.outputs.files }}"
           
           # Use the repository secret in your script
-          api_key=$API_KEY  # This retrieves the value of the API_KEY secret
+          api_key=${{ secrets.API_KEY }}  # This retrieves the value of the API_KEY secret
           
           # Loop through the changed files and make API calls for each one
           for file in $changed_files; do
