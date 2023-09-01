@@ -30,8 +30,7 @@ jobs:
         run: |
           changed_files="${{ steps.changed_files.outputs.files }}"
           
-          # Use the repository secret in your script
-          api_key=${{ secrets.API_KEY }}  # This retrieves the value of the API_KEY secret
+
           
           # Loop through the changed files and make API calls for each one
           for file in $changed_files; do
@@ -40,4 +39,6 @@ jobs:
             # Modify the following line to use your API endpoint and method
             response=$(curl --location --request PUT 'https://api.split.io/internal/api/v2/splits/ws/$WORKSPACE_ID/$flagName/environments/$PROD_ENV'  --header 'Content-Type: application/json' --header 'Authorization: Bearer ${{ secrets.API_KEY }}' --data "$content")
             echo "API response for $file: $response"
+            echo "Flag Name: $flagName"
+            echo "Workspace: $WORKSPACE_ID"
           done
