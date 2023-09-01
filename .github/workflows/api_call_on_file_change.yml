@@ -43,7 +43,7 @@ jobs:
             echo "API response for $file: $response"
             responseCode=$(echo "$response" | jq -r '.code')
             responseMsg=$(echo "$response" | jq -r '.message')
-            if [ "${responseMsg}" = "null" ]; then
+            if [ "${responseMsg}" != "null" ]; then
                echo "Error running action ${responseCode} : ${responseMsg}"
                exit 1
             fi
