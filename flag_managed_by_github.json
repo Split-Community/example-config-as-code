@@ -22,7 +22,7 @@
   ],
   "defaultTreatment": "off",
   "baselineTreatment": "off",
-  "trafficAllocation": 100,
+  "trafficAllocation": 80,
   "rules": [
     {
       "buckets": [
