@@ -10,3 +10,10 @@ The YAML file uses the [Full update of flag definition in environment API](https
 The filename is used to define the name of the feature flag, and secrets are used for the Admin API Key, environment id and workspace ID. 
 
 The flag definition can be refreshed using the [Get Feature Flag Definition in Environment](https://docs.split.io/reference/get-feature-flag-definition-in-environment) API to pull flags definitions down. 
+
+## Flag definition
+![image](https://github.com/Split-Community/example-config-as-code/assets/1207274/dbd86ec2-030d-4aa7-8046-840357ab4661)
+
+
+## Targeting Rules updated
+![image](https://github.com/Split-Community/example-config-as-code/assets/1207274/f1afd825-8db5-4542-858e-1c3782eabc75)
