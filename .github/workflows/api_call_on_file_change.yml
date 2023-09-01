@@ -13,18 +13,26 @@ jobs:
       - name: Check Out Code
         uses: actions/checkout@v2
 
-      - name: Read File Content
-        id: read_file
+      - name: Get Changed Files
+        id: changed_files
         run: |
-          file_content=$(cat flag_config.json)
-          echo "::set-output name=content::$file_content"
+          # Get a list of changed files in the push event
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          echo "::set-output name=files::$changed_files"
 
-      - name: Make API Call
-        id: api_call
+
+      - name: Make API Calls for Changed Files
+        id: api_calls
         run: |
-          content="${{ steps.read_file.outputs.content }}"
-          # Modify the following line to use your API endpoint and method
-          response=$(curl -X POST -H "Content-Type: application/json" -d "$content" https://your.api.endpoint)
-          echo "::set-output name=response::$response"
-        env:
-          API_KEY: ${{ secrets.API_KEY }}  # If using any secrets
+          changed_files="${{ steps.changed_files.outputs.files }}"
+          
+          # Use the repository secret in your script
+          api_key=$API_KEY  # This retrieves the value of the API_KEY secret
+          
+          # Loop through the changed files and make API calls for each one
+          for file in $changed_files; do
+            content=$(cat "$file")
+            # Modify the following line to use your API endpoint and method
+            response=$(curl --location --request PUT 'https://api.split.io/internal/api/v2/splits/ws/$WORKSPACE_ID/${file: 0: -5}/environments/$PROD_ENV'  --header 'Content-Type: application/json' --header 'Authorization: Bearer $api_key' --data "$content")
+            echo "API response for $file: $response"
+          done
