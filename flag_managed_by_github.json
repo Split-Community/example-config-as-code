@@ -1,0 +1,58 @@
+{
+  "id": "935bc1e0-48c7-11ee-a87d-925e66ae7524",
+  "name": "flag_managed_by_github",
+  "environment": {
+    "id": "48d8d230-7693-11e9-b44b-0a1c02136776",
+    "name": "Prod-Vacations"
+  },
+  "trafficType": {
+    "id": "48d61310-7693-11e9-b44b-0a1c02136776",
+    "name": "user"
+  },
+  "killed": false,
+  "treatments": [
+    {
+      "name": "on",
+      "description": ""
+    },
+    {
+      "name": "off",
+      "description": ""
+    }
+  ],
+  "defaultTreatment": "off",
+  "baselineTreatment": "off",
+  "trafficAllocation": 100,
+  "rules": [
+    {
+      "buckets": [
+        {
+          "treatment": "on",
+          "size": 100
+        }
+      ],
+      "condition": {
+        "combiner": "AND",
+        "matchers": [
+          {
+            "type": "IN_LIST_STRING",
+            "attribute": "state",
+            "strings": [
+              "PA",
+              "NY"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "defaultRule": [
+    {
+      "treatment": "off",
+      "size": 100
+    }
+  ],
+  "creationTime": 1693573257812,
+  "lastUpdateTime": 1693573280574,
+  "changeNumber": 1693573280575
+}
