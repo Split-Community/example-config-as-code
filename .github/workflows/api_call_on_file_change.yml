@@ -35,8 +35,10 @@ jobs:
           # Loop through the changed files and make API calls for each one
           for file in $changed_files; do
             content=$(cat "$file")
-            flagName="${file:18: -5}"
+            flagName="${file:0: -5}"
+            workspace="${{ secrets.WORKSPACE_ID }}"
+            env="${{ secrets.PROD_ENV }}"
             # Modify the following line to use your API endpoint and method
-            response=$(curl --location --request PUT "https://api.split.io/internal/api/v2/splits/ws/${{ secrets.WORKSPACE_ID }}/${flagName}/environments/${{ secrets.PROD_ENV }}"  --header 'Content-Type: application/json' --header 'Authorization: Bearer ${{ secrets.API_KEY }}' --data "$content")
+            response=$(curl --location --request PUT "https://api.split.io/internal/api/v2/splits/ws/${workspace}/${flagName}/environments/${env}"  --header 'Content-Type: application/json' --header 'Authorization: Bearer ${{ secrets.API_KEY }}' --data "$content")
             echo "API response for $file: $response"
           done
