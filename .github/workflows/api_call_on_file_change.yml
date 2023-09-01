@@ -41,4 +41,9 @@ jobs:
             # Modify the following line to use your API endpoint and method
             response=$(curl --location --request PUT "https://api.split.io/internal/api/v2/splits/ws/${workspace}/${flagName}/environments/${env}"  --header 'Content-Type: application/json' --header 'Authorization: Bearer ${{ secrets.API_KEY }}' --data "$content")
             echo "API response for $file: $response"
+            responseCode=$(echo "$response" | jq -r '.code')
+            if [ "${responseCode:0:1}" != "2" ]; then
+               echo "Error running action"
+               exit 1
+            fi
           done
